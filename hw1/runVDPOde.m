@@ -1,3 +1,14 @@
+% run VDP ode function
+% returns: 
+%           p = error of log(delta t) vs log(error)
+%           dt = vector of mean step sizes
+%           f = figure object plotting log(delta t) vs log(error)
+% inputs: 
+%           ode_fun = sepcific ode solver to use (ode45, ode113, etc.)
+%           ode = indivual ode function to solve
+%           t_span = time span to iterate through
+%           tols = tolerance vectors
+%           init_cond = initial conditions for ode
 function [p, dt, f] = runVDPOde(ode_fun, ode, t_span, tols, init_cond)
     
     dt = []; % vector for dt vals

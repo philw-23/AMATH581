@@ -39,7 +39,7 @@ xlabel('Log of delta t')
 ylabel('Log of Error')
 saveas(f, 'Euler_Method_Error.png')
 
-A1 = y_pred; % ANSWER - Last dt values
+A1 = y_pred'; % ANSWER - Last dt values (transpose for column vector)
 A2 = err_vec(:, 2)'; % ANSWER - Error values
 A3 = p(1); % ANSWER - Slope of polyfit line
 
@@ -70,7 +70,7 @@ xlabel('Log of delta t')
 ylabel('Log of Error')
 saveas(f, 'Heun_Method_Error.png')
 
-A4 = y_pred; % ANSWER - Last dt values
+A4 = y_pred'; % ANSWER - Last dt values (transpose for column vector)
 A5 = err_vec(:, 2)'; % ANSWER - Error values
 A6 = p(1); % ANSWER - Slope of polyfit line
 
@@ -124,4 +124,40 @@ A8 = p_sols(1); % ANSWER - polyfit of ode45 tol/dt
 A9 = p_sols(2); % ANSWER - polyfit of ode23 tol/dt
 A10 = p_sols(3); % ANSWER - polyfit of ode113 tol/dt
 
+%% Exercise 3
 
+% Define parameters for problem
+a = [0.05 0.25];
+b = 0.01;
+c = 0.01;
+I = 0.1;
+
+% Define initial conditions
+y_init = [0.1 0.1 0 0];
+
+% Define times to record results
+t_vec = [0:0.5:100];
+
+% Define iteration sets
+d_vals = [0 0; 0 0.2; -0.1 0.2; -0.3 0.2; -0.5 0.2];
+
+% Define result tensor
+results = zeros(length(t_vec), ...
+                length(y_init), ...
+                length(d_vals));
+
+% iterate
+for i = 1:length(d_vals) % iterate through all rows
+    d = d_vals(i, :); % get d values
+    [t, result] = ode15s(@(t, y) ...
+                            fitzhughNeurons(t, y, a, b, c, d, I), ...
+                            t_vec, y_init); % Make function call
+    results(:, :, i) = result;
+end
+
+% ANSWERS
+A11 = results(:, :, 1);
+A12 = results(:, :, 2);
+A13 = results(:, :, 3);
+A14 = results(:, :, 4);
+A15 = results(:, :, 5);
