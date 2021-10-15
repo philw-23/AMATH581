@@ -93,6 +93,12 @@ for e = eps % Solve for all epsilon values
     vdp_ode = @(t, y) [y(2); -e * (y(1)^2 - 1) * y(2) - y(1)]; 
     [t_sol, y_sol] = ode45(vdp_ode, [0:0.5:32], [y_0; dy_0]);
     y_sols(:, end + 1) = y_sol(:, 1);
+    % Plot our results for y
+    f = figure('Visible','off');
+    plot(t_sol, y_sol(:,1));
+    xlabel('time (t)');
+    ylabel('Solution (y)');
+    saveas(f, strcat("vdp_ode_sol_eps=", string(e), ".png"))
 end
 
 A7 = y_sols; % ANSWER - results for y(t) for each epsilon
@@ -153,6 +159,13 @@ for i = 1:length(d_vals) % iterate through all rows
                             fitzhughNeurons(t, y, a, b, c, d, I), ...
                             t_vec, y_init); % Make function call
     results(:, :, i) = result;
+    % plot results
+    f = figure('Visible','off');
+    plot(t, result)
+    xlabel('time (t)')
+    ylabel('results')
+    legend('v1', 'v2', 'w1', 'w2')
+    saveas(f, strcat('fitzhughNeruons_case_', string(i), ".png"))
 end
 
 % ANSWERS
