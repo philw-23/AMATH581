@@ -63,7 +63,7 @@ for i=1:length(permvec) % iterate through permutation vector
 end
 
 % Recenter matrix
-Ftransformed = F;
+Ftransformed = F; % use F as we want to preserve external values in matrix while updating center
 Ftransformed(start_idx:end_idx, start_idx:end_idx) = Fpermuted;
 
 % Unshift and transform

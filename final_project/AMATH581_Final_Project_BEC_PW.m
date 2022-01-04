@@ -66,6 +66,7 @@ if plotting
     plotSolutions(t, y_cosine, x_grid, y_grid, z_grid, N, 'gif', filename);
     % Generate time progressions
     plotSolutions(t, y_cosine, x_grid, y_grid, z_grid, N, 'prog', filename);
+    plotSolutions(t, y_cosine, x_grid, y_grid, z_grid, N, 'contour', filename);
 end
 
 %% Part 2 - Sine Initial Conditions
@@ -89,6 +90,7 @@ if plotting
     plotSolutions(t, y_sine, x_grid, y_grid, z_grid, N, 'gif', filename);
     % Generate time progressions
     plotSolutions(t, y_sine, x_grid, y_grid, z_grid, N, 'prog', filename);
+    plotSolutions(t, y_sine, x_grid, y_grid, z_grid, N, 'contour', filename);
 end
 
 % Close all figures

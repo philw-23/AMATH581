@@ -35,7 +35,7 @@ u = u_init(m, x_grid, y_grid);
 v = v_init(m, x_grid, y_grid);
 uf = fft2(u); % convert u to fourier space
 vf = fft2(v); % convert v to fourier space
-uvf0 = [reshape(uf, N^2, []); reshape(vf, N^2, [])]; % concatenate initial condition
+uvf_0 = [reshape(uf, N^2, []); reshape(vf, N^2, [])]; % concatenate initial condition
 
 % Define General Parameters and build struct var
 beta = 1; D1 = 0.1; D2 = 0.1;
@@ -45,7 +45,7 @@ svars.lambda_A = lambda_A; svars.omega_A = omega_A; svars.lap = K;
 %% Fourier Solutions
 
 [tf_sol, yf_sol] = ode45(@(t, uvf) fftStep(t, uvf, svars), ...
-                    t_span, uvf0);
+                    t_span, uvf_0);
 
 % SOLUTIONS
 A1 = real(yf_sol); % Real portion of solution

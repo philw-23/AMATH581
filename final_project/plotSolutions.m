@@ -42,4 +42,18 @@ function plotSolutions(t_span, sol, x_grid, y_grid, z_grid, N, p, filename)
         clf; % clear figure
     end
 
+    if strcmp(p, 'contour')
+        filename = strcat(filename, ' Contour'); % Add piece to title
+        f = figure(); % default figure
+        for i=1:length(t_span)
+            subplot(3, 3, i)
+            y_plot = reshape(sol(i, :), N, N, []); % get value for time
+            y_plot = real(ifftn(y_plot)); % get real value in real space
+            contourslice(x_grid, y_grid, z_grid, y_plot, 0, [], []); % plot surface
+            title(['t = ', num2str(t_span(i)), ' seconds']); % title
+            view(3); % set view dimension
+        end
+        saveas(f, strcat(filename, '.jpg')); % save as jpeg
+        clf; % clear figure
+    end
 end

@@ -100,8 +100,13 @@ A6 = eps_sols; % eigenvalues
    
    Using this equation, can build a diagonal matrix using only interior
    points (no x_0, x_n): -1 on diagonal -1 and diagonal +1, and then the
-   (2 + ...) on the main diagonal. Note this doesn't include the boundary
-   points, we will need to overwrite these points later with other values
+   (2 + ...) on the main diagonal. 
+
+   Note this doesn't include the boundary points, we will need to overwrite 
+   these points later with other values. This is because our vector for phi
+   is only considering values x_2 through x_n-1, so we no don't have access
+   to the point x_0 or x_n for the center difference scheme. We will need
+   to derive substitutes for these values
 %}
 x_sub = x_span(2:end-1);
 A_sub = diag(-1*ones(length(x_sub)-1, 1), -1) + ...
@@ -110,7 +115,8 @@ A_sub = diag(-1*ones(length(x_sub)-1, 1), -1) + ...
 
 % Now we need to handle boundary condition
 %{
-  For starting point we use a forward scheme.
+  To substitute for x_0 at our boundary, we start with a forward difference
+  scheme for x_0
     phi'(x_0) = sqrt(K*x_0^2 - eps)*phi(x_0) = ...
     (-3*phi(x_0) + 4*phi(x_1) - phi(x_2)) / 2*dx
   
@@ -118,10 +124,10 @@ A_sub = diag(-1*ones(length(x_sub)-1, 1), -1) + ...
   when multiplying through the term will go to 0. Thus:
     3*phi(x_0) = 4*phi(x_1) - phi(x_2)
 
-  Using this, we substitute into our central difference scheme for phi(x_0)
-  because the first row of our matrix corresponds to x_1 and we do not have
-  the phi(x_0) term. This allows us to get this value in terms of phi(x_1)
-  and phi(x_2) for our A matrix
+  Using this, we can substitute into our central difference scheme for phi(x_1) 
+  a value for phi(x_0) because the first row of our matrix corresponds to x_1 
+  and we do not have an x_0 term. This allows us to get this value in 
+  terms of phi(x_1) and phi(x_2) to plug in to our A matrix
     -4/3*phi(x_1) + 1/3*phi(x_2)^2 + 2phi(x_1) + K*dx^2*x_1^2*phi(x_1)
   -> (2/3 + K*dx^2*x_1^2)*phi(x_1) - 2/3*phi(x_2) = eps*phi(x_1)
 
